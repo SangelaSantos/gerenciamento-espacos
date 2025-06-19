@@ -7,7 +7,7 @@ import * as THREE from 'three';
 const salasInfo = [
   { nome: '29', descricao: 'Área administrativa da escola.' },
   { nome: '29001', descricao: 'Espaço de leitura e estudo.' },
-  { nome: 'Laboratório1', descricao: 'Laboratório de Ciências.' },
+  { nome: '22', descricao: 'Laboratório de Ciências.' },
   // Adicione mais conforme o nome dos seus objetos no Blender
 ];
 
@@ -18,12 +18,15 @@ function Modelo({ onObjectClick }) {
   useEffect(() => {
     scene.traverse((obj) => {
       if (obj.isMesh) {
-        obj.userData = { nome: obj.name };
+        const salaExiste = salasInfo.find((sala) => sala.nome === obj.name);
 
-        // Adiciona função ao objeto
-        obj.onClick = () => onObjectClick(obj.name);
+        if (salaExiste) {
+          obj.userData = { nome: obj.name };
+          obj.onClick = () => onObjectClick(obj.name);
+        }
       }
     });
+
   }, [scene, onObjectClick]);
 
   return <primitive object={scene} />;
@@ -78,12 +81,17 @@ function App() {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
+        flexDirection: 'column',
         width: '100vw',
         height: '100vh',
         margin: 'auto',
-        backgroundColor: '#333'
+        backgroundColor: '#fff'
       }}
     >
+      <nav>
+        <h2 style={{color: '#272727'}}>Sistema de gerenciamento de espaços</h2>
+      </nav>
+      <h3 style={{color: '#272727'}}>LOCAÇÃO DE SALAS - UNIDADE TAPAJÓS</h3>
       <Canvas camera={{ position: [0, 10, 20], fov: 60 }}>
         <ambientLight intensity={0.5} />
         <directionalLight position={[10, 20, 15]} />
@@ -94,7 +102,7 @@ function App() {
           maxPolarAngle={Math.PI / 2.5}
           minPolarAngle={0}
           minDistance={5}
-          maxDistance={12}
+          maxDistance={15}
           target={[0, 0, 0]}
         />
 
