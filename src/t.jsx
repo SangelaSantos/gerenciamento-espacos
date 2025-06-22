@@ -4,18 +4,63 @@ import { useEffect, useState } from 'react';
 import * as THREE from 'three';
 
 const salasInfo = [
-  { nome: '12', descricao: 'Guarita' },
+  //ZN-01
+  { nome: '01', descricao: 'Guarita' },
+  { nome: '02', descricao: 'Reitoria, CITIC, Cerimonial' },
+  { nome: '03', descricao: 'IEG' },
+  { nome: '04', descricao: 'IBEF, Laboratório de Química ICTA' },
+  { nome: '08', descricao: 'Laboratório Tecnologia da Madeira' },
+  { nome: '09', descricao: 'Laboratório ICTA e IEG' },
+  { nome: '10', descricao: 'Laboratório de Sementes Florestais' },
+  { nome: '11', descricao: 'Laboratório ICED e ISCO' },
+  { nome: '13', descricao: 'Laboratórios' },
+  { nome: '15', descricao: 'Laboratório de Arqueologia 2 - ICS' },
+  { nome: '16', descricao: 'Serraria' },
+  { nome: '17', descricao: 'Projeto Navegar' },
+  { nome: '18', descricao: 'Laboratório IEG' },
+  { nome: '19001', descricao: 'Bloco de Salas Especiais - BSE' },
+  { nome: '19002', descricao: 'Bloco de Salas Especiais - BSE' },
+  { nome: '19', descricao: 'Sala de Monitoramento' },
   { nome: '20', descricao: 'Escritório Contrato Limpeza' },
   { nome: '21', descricao: 'Laboratório de Ciências Atmosféricas - IEG' },
   { nome: '22', descricao: 'Laboratório de Inteligência Computacional - IEG' },
+  { nome: '23', descricao: 'Laboratório de Arqueologia 1 - ICS' },
+  { nome: '24', descricao: 'Reservatório Ativo' },
+  { nome: '25', descricao: 'Laboratório de Morfofisiologia' },
+  { nome: '29', descricao: 'SE - 02 Subestação' },
+  { nome: '29001', descricao: 'Professores IBEF' },
+  { nome: '30', descricao: 'SE - 03 Subestação' },
   { nome: '31', descricao: 'SE-04 - Subestação' },
+  { nome: '32', descricao: 'SE - 05 Subestação' },
+  { nome: '34', descricao: 'Bloco Modular Tapajós' },
+  { nome: '34001', descricao: 'BMT - 3' },
   { nome: 'NSAB', descricao: 'NSAB' },
   { nome: 'NSAC', descricao: 'NSAC' },
-  { nome: '34', descricao: 'BMT-3' },
+  { nome: 'NSAB01', descricao: 'NSAB' },
+  { nome: 'NSAC01', descricao: 'NSAC' },
+  //ZN-03
+  { nome: '01006', descricao: 'Restaurante Universitário (RU)' },
+  { nome: '02006', descricao: 'Subestação (SE) e Grupo Gerador (GG)' },
+  //ZN-04
+  { nome: '01002', descricao: 'Núcleo Tecnológico de Bioativos (NTB)' },
+  { nome: '02002', descricao: 'Laboratórios - IBEF' },
+  { nome: '03002', descricao: 'Casa de gases' },
+  { nome: '04002', descricao: 'Laboratórios - IBEF' },
+  { nome: '05002', descricao: 'Núcleo Tecnológico de Laboratórios (NTL)' },
+  { nome: '052001', descricao: 'Núcleo Tecnológico de Laboratórios (NTL)' },
+  { nome: '06002', descricao: 'Sistema de Abastecimento de Água' },
+  { nome: '07002', descricao: 'Sistema de Abastecimento de Água' },
+  //ZN-05
+  { nome: '01001', descricao: 'Laboratórios - ICTA' },
+  { nome: '02001', descricao: 'Laboratórios - ICTA' },
+  { nome: '03001', descricao: 'Sistema de Abastecimento de Água' },
+  { nome: '04001', descricao: 'Projeto Fábrica de Ração' },
+  { nome: '05001', descricao: 'Base Administrativa do Viveiro' },
+  { nome: '06001', descricao: 'Rede Nacional de Pesquisa e Extensão (RNP)' },
 ];
 
 function Modelo({ onObjectClick, objetoSelecionado }) {
-  const { scene } = useGLTF('/certo4.glb');
+  const { scene } = useGLTF('/adjustments.glb');
 
   useEffect(() => {
     scene.traverse((obj) => {
@@ -170,16 +215,16 @@ function App() {
       >
         <h3 style={{ color: '#272727', marginTop: 0 }}>LOCAÇÃO DE SALAS - UNIDADE TAPAJÓS</h3>
         <div style={{ width: '100%', height: '90%', backgroundColor: '#fff' }}>
-          <Canvas camera={{ position: [0, 0, 5], fov: 60 }}>
+          <Canvas camera={{ position: [-4, 0, 2], fov: 60 }}>
             <ambientLight intensity={0.5} />
             <directionalLight position={[10, 20, 15]} />
             <Modelo onObjectClick={handleObjectClick} objetoSelecionado={objetoSelecionado} />
             <OrbitControls
               enablePan={true}
               enableZoom={true}
-              maxPolarAngle={Math.PI / 2.5}
+              maxPolarAngle={Math.PI / 2.3}
               minPolarAngle={0}
-              minDistance={5}
+              minDistance={2}
               maxDistance={20}
               target={[0, 0, 0]}
             />
@@ -187,8 +232,9 @@ function App() {
           </Canvas>
         </div>
 
-        <p style={{ color: '#272727', marginTop: '10px' }}>
-          <strong>Info:</strong> {infoSelecionada || 'Clique em uma sala para ver detalhes.'}
+        <p style={{ color: '#272727', marginTop: '10px', textAlign: 'left',
+    alignSelf: 'flex-start', fontSize: '20px' }}>
+          <strong>INFORMAÇÕES:</strong> {infoSelecionada || 'Clique em uma sala para ver detalhes.'}
         </p>
       </div>
     </div>

@@ -45,7 +45,7 @@ const salasInfo = [
 ];
 
 function Modelo({ onObjectClick, objetoSelecionado }) {
-    const { scene } = useGLTF('/certo4.glb');
+    const { scene } = useGLTF('/ajustes3.glb');
 
     useEffect(() => {
         scene.traverse((obj) => {

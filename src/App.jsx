@@ -4,20 +4,16 @@ import { useEffect, useState } from 'react';
 import * as THREE from 'three';
 
 const salasInfo = [
+  //ZN-01
   { nome: '01', descricao: 'Guarita' },
   { nome: '02', descricao: 'Reitoria, CITIC, Cerimonial' },
   { nome: '03', descricao: 'IEG' },
   { nome: '04', descricao: 'IBEF, Laboratório de Química ICTA' },
-  //{ nome: '05', descricao: '05' },
-  //{ nome: '06', descricao: '06' },
-  //{ nome: '07', descricao: '07' },
   { nome: '08', descricao: 'Laboratório Tecnologia da Madeira' },
   { nome: '09', descricao: 'Laboratório ICTA e IEG' },
   { nome: '10', descricao: 'Laboratório de Sementes Florestais' },
   { nome: '11', descricao: 'Laboratório ICED e ISCO' },
-  // { nome: '12', descricao: '12' },
   { nome: '13', descricao: 'Laboratórios' },
-  //{ nome: '14', descricao: '14' },
   { nome: '15', descricao: 'Laboratório de Arqueologia 2 - ICS' },
   { nome: '16', descricao: 'Serraria' },
   { nome: '17', descricao: 'Projeto Navegar' },
@@ -29,29 +25,42 @@ const salasInfo = [
   { nome: '21', descricao: 'Laboratório de Ciências Atmosféricas - IEG' },
   { nome: '22', descricao: 'Laboratório de Inteligência Computacional - IEG' },
   { nome: '23', descricao: 'Laboratório de Arqueologia 1 - ICS' },
-  { nome: '24', descricao: 'Sistema de Abastecimento de Água' },
+  { nome: '24', descricao: 'Reservatório Ativo' },
   { nome: '25', descricao: 'Laboratório de Morfofisiologia' },
-  //{ nome: '26', descricao: '26' },
-  //{ nome: '27', descricao: '27' },
-  //{ nome: '28', descricao: '28' },
   { nome: '29', descricao: 'SE - 02 Subestação' },
   { nome: '29001', descricao: 'Professores IBEF' },
   { nome: '30', descricao: 'SE - 03 Subestação' },
   { nome: '31', descricao: 'SE-04 - Subestação' },
   { nome: '32', descricao: 'SE - 05 Subestação' },
-  //{ nome: '33', descricao: '33' },
   { nome: '34', descricao: 'Bloco Modular Tapajós' },
   { nome: '34001', descricao: 'BMT - 3' },
-  //{ nome: '35', descricao: '35' },
-  //{ nome: '36', descricao: '36' },
   { nome: 'NSAB', descricao: 'NSAB' },
   { nome: 'NSAC', descricao: 'NSAC' },
   { nome: 'NSAB01', descricao: 'NSAB' },
   { nome: 'NSAC01', descricao: 'NSAC' },
+  //ZN-03
+  { nome: '01006', descricao: 'Restaurante Universitário (RU)' },
+  { nome: '02006', descricao: 'Subestação (SE) e Grupo Gerador (GG)' },
+  //ZN-04
+  { nome: '01002', descricao: 'Núcleo Tecnológico de Bioativos (NTB)' },
+  { nome: '02002', descricao: 'Laboratórios - IBEF' },
+  { nome: '03002', descricao: 'Casa de gases' },
+  { nome: '04002', descricao: 'Laboratórios - IBEF' },
+  { nome: '05002', descricao: 'Núcleo Tecnológico de Laboratórios (NTL)' },
+  { nome: '052001', descricao: 'Núcleo Tecnológico de Laboratórios (NTL)' },
+  { nome: '06002', descricao: 'Sistema de Abastecimento de Água' },
+  { nome: '07001', descricao: 'Sistema de Abastecimento de Água' },
+  //ZN-05
+  { nome: '01001', descricao: 'Laboratórios - ICTA' },
+  { nome: '02001', descricao: 'Laboratórios - ICTA' },
+  { nome: '03001', descricao: 'Sistema de Abastecimento de Água' },
+  { nome: '04001', descricao: 'Projeto Fábrica de Ração' },
+  { nome: '05001', descricao: 'Base Administrativa do Viveiro' },
+  { nome: '06001', descricao: 'Rede Nacional de Pesquisa e Extensão (RNP)' },
 ];
 
 function Modelo({ onObjectClick, objetoSelecionado }) {
-  const { scene } = useGLTF('/ajustes3.glb');
+  const { scene } = useGLTF('/ajustes5.glb');
 
   useEffect(() => {
     scene.traverse((obj) => {
@@ -213,10 +222,10 @@ function App() {
             <OrbitControls
               enablePan={true}
               enableZoom={true}
-              maxPolarAngle={Math.PI / 2.3}
+              maxPolarAngle={Math.PI / 2.2}
               minPolarAngle={0}
               minDistance={2}
-              maxDistance={20}
+              maxDistance={25}
               target={[0, 0, 0]}
             />
             <RaycastSelector onObjectClick={handleObjectClick} objetoSelecionado={objetoSelecionado} />
