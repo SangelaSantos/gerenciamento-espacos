@@ -230,7 +230,7 @@ function App() {
       overflow: 'hidden',
     }}>
       <nav>
-        <h1 style={{ color: '#272727', margin: '5px 0' }}>
+        <h1 style={{ color: '#272727', margin: '5px 0', fontSize: 'clamp(20px, 4vw, 40px)' }}>
           Sistema de gerenciamento de espaços
         </h1>
       </nav>
@@ -249,7 +249,7 @@ function App() {
         flexDirection: 'column',
         alignItems: 'center',
       }}>
-        <h3 style={{ color: '#272727', marginTop: 0 }}>
+        <h3 style={{ color: '#272727', marginTop: 0}}>
           LOCAÇÃO DE SALAS - UNIDADE TAPAJÓS
         </h3>
 
