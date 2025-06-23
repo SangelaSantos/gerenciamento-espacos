@@ -1,12 +1,13 @@
 import { Canvas, useThree } from '@react-three/fiber';
-import { OrbitControls, useGLTF } from '@react-three/drei';
+import { OrbitControls, useGLTF, Html } from '@react-three/drei';
+import { FaLocationDot } from "react-icons/fa6";
 import { useEffect, useState } from 'react';
 import * as THREE from 'three';
 
 const salasInfo = [
   //ZN-01
   { nome: '01', descricao: 'Guarita' },
-  { nome: '02', descricao: 'Reitoria, CITIC, Cerimonial' },
+  { nome: '2', descricao: 'Reitoria, CITIC, Cerimonial' },
   { nome: '03', descricao: 'IEG' },
   { nome: '04', descricao: 'IBEF, Laboratório de Química ICTA' },
   { nome: '08', descricao: 'Laboratório Tecnologia da Madeira' },
@@ -59,8 +60,9 @@ const salasInfo = [
   { nome: '06001', descricao: 'Rede Nacional de Pesquisa e Extensão (RNP)' },
 ];
 
+// Componente do modelo GLTF
 function Modelo({ onObjectClick, objetoSelecionado }) {
-  const { scene } = useGLTF('/ajustes5.glb');
+  const { scene } = useGLTF('/testes.glb');
 
   useEffect(() => {
     scene.traverse((obj) => {
@@ -81,9 +83,9 @@ function Modelo({ onObjectClick, objetoSelecionado }) {
     scene.traverse((obj) => {
       if (obj.isMesh && obj.userData?.nome) {
         if (obj === objetoSelecionado) {
-          obj.material.emissive.set(0x2e8b57); // Verde para selecionado
+          obj.material.emissive.set(0x2e8b57); // verde
         } else {
-          obj.material.emissive.set(0x000000); // Reset
+          obj.material.emissive.set(0x000000); // sem destaque
         }
       }
     });
@@ -92,6 +94,50 @@ function Modelo({ onObjectClick, objetoSelecionado }) {
   return <primitive object={scene} />;
 }
 
+function IconeEmCima({ objeto }) {
+  if (!objeto) return null;
+
+  const position = objeto.getWorldPosition(new THREE.Vector3());
+  position.y += 0.5;
+
+  const nome = objeto.userData?.nome;
+  const sala = salasInfo.find((s) => s.nome === nome);
+  const descricao = sala?.descricao || `Sem info para ${nome}`;
+
+return (
+  <Html position={position} center distanceFactor={8}>
+    <div style={{
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      maxWidth: '160px',
+      textAlign: 'center',
+    }}>
+      <p style={{ 
+        color: '#222',
+        fontSize: '5px',
+        fontWeight: 'bold',
+        backgroundColor: 'rgba(255, 255, 255, 0.95)',
+        border: '1px solid #ccc',
+        padding: '4px 6px',
+        borderRadius: '6px',
+        boxShadow: '0 2px 6px rgba(0,0,0,0.2)',
+        whiteSpace: 'nowrap',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        margin: 0,
+        width: '100%'
+      }}>
+        {descricao}
+      </p>
+      <FaLocationDot style={{ color: 'red', fontSize: '20px', marginBottom: '4px', padding: '4px 6px', }} />
+    </div>
+  </Html>
+);
+}
+
+
+// Componente de raycasting
 function RaycastSelector({ onObjectClick, objetoSelecionado }) {
   const { gl, camera, scene } = useThree();
   const [clickableObjects, setClickableObjects] = useState([]);
@@ -121,18 +167,15 @@ function RaycastSelector({ onObjectClick, objetoSelecionado }) {
       if (intersects.length > 0) {
         const obj = intersects[0].object;
         if (obj !== hoveredObject) {
-          // Reset o antigo hover
           if (hoveredObject && hoveredObject !== objetoSelecionado) {
             hoveredObject.material.emissive.set(0x000000);
           }
-          // Se o novo objeto não for o selecionado, aplicar hover azul
           if (obj !== objetoSelecionado) {
-            obj.material.emissive.set(0x4682b4); // Azul (hover)
+            obj.material.emissive.set(0x4682b4); // azul
           }
           setHoveredObject(obj);
         }
       } else {
-        // Quando não estiver sobre nada
         if (hoveredObject && hoveredObject !== objetoSelecionado) {
           hoveredObject.material.emissive.set(0x000000);
         }
@@ -154,7 +197,6 @@ function RaycastSelector({ onObjectClick, objetoSelecionado }) {
         }
       }
     }
-
     gl.domElement.addEventListener('mousemove', handlePointerMove);
     gl.domElement.addEventListener('click', handleClick);
     return () => {
@@ -166,54 +208,51 @@ function RaycastSelector({ onObjectClick, objetoSelecionado }) {
   return null;
 }
 
+// App principal
 function App() {
   const [infoSelecionada, setInfoSelecionada] = useState(null);
   const [objetoSelecionado, setObjetoSelecionado] = useState(null);
 
   const handleObjectClick = (obj) => {
     setObjetoSelecionado(obj);
-
     const infoSala = salasInfo.find((sala) => sala.nome === obj.name);
-    if (infoSala) {
-      setInfoSelecionada(infoSala.descricao);
-    } else {
-      setInfoSelecionada(`Sem informações para: ${obj.name}`);
-    }
+    setInfoSelecionada(infoSala ? infoSala.descricao : `Sem informações para: ${obj.name}`);
   };
 
   return (
-    <div
-      style={{
+    <div style={{
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      width: '100vw',
+      height: '100vh',
+      backgroundColor: '#fff',
+      overflow: 'hidden',
+    }}>
+      <nav>
+        <h1 style={{ color: '#272727', margin: '5px 0' }}>
+          Sistema de gerenciamento de espaços
+        </h1>
+      </nav>
+
+      <div style={{
+        border: '1px solid #064452',
+        backgroundColor: '#f0f4f8',
+        borderRadius: '12px',
+        padding: '20px',
+        width: '70%',
+        height: '75%',
+        maxWidth: '1000px',
+        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.5)',
+        marginTop: '20px',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        width: '100vw',
-        height: '100vh',
-        backgroundColor: '#fff',
-        overflow: 'hidden',
-      }}
-    >
-      <nav>
-        <h1 style={{ color: '#272727', margin: '5px 0 5px 0' }}>Sistema de gerenciamento de espaços</h1>
-      </nav>
+      }}>
+        <h3 style={{ color: '#272727', marginTop: 0 }}>
+          LOCAÇÃO DE SALAS - UNIDADE TAPAJÓS
+        </h3>
 
-      <div
-        style={{
-          border: '1px solid #064452',
-          backgroundColor: '#f0f4f8',
-          borderRadius: '12px',
-          padding: '20px',
-          width: '70%',
-          height: '75%',
-          maxWidth: '1000px',
-          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.5)',
-          marginTop: '20px',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-        }}
-      >
-        <h3 style={{ color: '#272727', marginTop: 0 }}>LOCAÇÃO DE SALAS - UNIDADE TAPAJÓS</h3>
         <div style={{ width: '100%', height: '90%', backgroundColor: '#fff' }}>
           <Canvas camera={{ position: [-4, 0, 2], fov: 60 }}>
             <ambientLight intensity={0.5} />
@@ -229,13 +268,36 @@ function App() {
               target={[0, 0, 0]}
             />
             <RaycastSelector onObjectClick={handleObjectClick} objetoSelecionado={objetoSelecionado} />
+            <IconeEmCima objeto={objetoSelecionado} />
           </Canvas>
+
+          {/* {infoSelecionada && (
+            <div
+              style={{
+                position: 'relative',
+                top: 0,
+                left: 20,
+                padding: '10px 15px',
+                backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                borderRadius: '8px',
+                color: '#000',
+                maxWidth: '300px'
+              }}
+            >
+              {infoSelecionada}
+            </div>
+          )} */}
         </div>
 
-        <p style={{ color: '#272727', marginTop: '10px', textAlign: 'left',
-    alignSelf: 'flex-start', fontSize: '20px' }}>
+        {/* <p style={{
+          color: '#272727',
+          marginTop: '10px',
+          textAlign: 'left',
+          alignSelf: 'flex-start',
+          fontSize: '20px'
+        }}>
           <strong>INFORMAÇÕES:</strong> {infoSelecionada || 'Clique em uma sala para ver detalhes.'}
-        </p>
+        </p> */}
       </div>
     </div>
   );
