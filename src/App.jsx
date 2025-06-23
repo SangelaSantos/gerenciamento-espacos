@@ -115,11 +115,12 @@ return (
     }}>
       <p style={{ 
         color: '#222',
-        fontSize: '5px',
+        fontSize: '8px',
         fontWeight: 'bold',
         backgroundColor: 'rgba(255, 255, 255, 0.95)',
         border: '1px solid #ccc',
-        padding: '4px 6px',
+        // display: 'inline-block',
+        padding: '6px 35px',
         borderRadius: '6px',
         boxShadow: '0 2px 6px rgba(0,0,0,0.2)',
         whiteSpace: 'nowrap',
